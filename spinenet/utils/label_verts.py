@@ -159,6 +159,12 @@ def label_verts(
             sequence_predictions,
         )
     else:
+        # remove keys that are not needed; 'appearance_guess', 'context_guess', 'context_features','appearance_features', 'visual_features'
+        for vert_dict_idx, vert_dict in enumerate(vert_dicts):
+            for key in list(vert_dict.keys()):
+                if key not in ["predicted_label", "slice_nos", "polys","average_polygon"]:
+                    del vert_dict[key]
+            vert_dicts[idx] = vert_dict
         return vert_dicts
 
 
