@@ -9,10 +9,12 @@ To do:
 
 ## Introduction
 
-SpineNet is automated software for analysing clinical spinal MRI scans. It's functionality is currently:
+SpineNet is automated software for analysing clinical spinal MRI scans. Current functionality includes:
 
 1. Detecting and labelling vertebral bodies in sagittally-sliced MRI scan across a range of common sequences (e.g. T1, T2, STIR etc.) and fields of view (lumbar, cervical, whole spine).
 2. Performing radiological grading at each intervertebral disc level in T2 lumbar scans from T12/L1 to L5/S1 for a range of common degenerative changes.
+
+As well as using SpineNet for detecting and labelling vertebral bodies and the existing radiological gradings, you can also use the codebase for finetuning the model to perform additional gradings. For example, we have previously adapted it to detect vertebral fractures, cauda equina, ankylosing spondylitis and other diseases.
 
 ## Getting Started
 
