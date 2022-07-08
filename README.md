@@ -3,7 +3,8 @@
 To do:
 - [x] Detection and labelling pipeline
 - [x] Grading pipeline
-- [ ] Training/Finetuning Grading Model
+- [ ] Training/Finetuning Grading Model Tutorial
+- [ ] Write Documentation
 - [ ] Pip-installable
 - [ ] Note on using for non-commerical tasks only (ask AZ for draft)
 
