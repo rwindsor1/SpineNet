@@ -50,7 +50,7 @@ For a guide on using SpineNet, see the `01-quickstart.ipynb` tutorial notebook.
 
 ## Citation
 
-If you use SpineNet in your research, please cite our technical report, where can be found on arxiv [https://arxiv.org/abs/2205.01683](here)
+If you use SpineNet in your research, please cite our technical report, where can be found on arxiv [](https://arxiv.org/abs/2205.01683)
 
 `SpineNetV2: Automated Detection, Labelling and Radiological Grading Of Clinical MR Scans' (2022), Rhydian Windsor, Amir Jamaludin, Timor Kadir, Andrew Zisserman, Technical Report
 
