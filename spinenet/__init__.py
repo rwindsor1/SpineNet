@@ -37,12 +37,14 @@ def download_weights(verbose: bool = False, force: bool = False) -> None:
     download_weights_io(weights_path, weights_dict, verbose=verbose, force=force)
 
 def download_example_scan(example_scan_name: str, file_path: Union[os.PathLike, str]) -> None:
-    assert example_scan_name in ['t2_lumbar_scan_1', 't2_lumbar_scan_2'], "example_scan_name must be one of ['t2_lumbar_scan_1']"
-
     scans_path = {
         't2_lumbar_scan_1': 'https://www.robots.ox.ac.uk/~vgg/research/spinenet/example_scans/t2_lumbar_scan_1.zip',
         't2_lumbar_scan_2': 'https://www.robots.ox.ac.uk/~vgg/research/spinenet/example_scans/t2_lumbar_scan_2.zip',
+        'stir_whole_spine': 'https://www.robots.ox.ac.uk/~vgg/research/spinenet/example_scans/stir_whole_spine.zip',
+        't2_whole_spine': 'https://www.robots.ox.ac.uk/~vgg/research/spinenet/example_scans/t2_whole_spine.zip',
     }
+    assert example_scan_name in scans_path.keys(), f"example_scan_name must be one of {scans_path.keys()}"
+
 
 
     scan_url = scans_path[example_scan_name]

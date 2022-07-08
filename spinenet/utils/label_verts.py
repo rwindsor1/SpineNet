@@ -43,8 +43,8 @@ def label_verts(
     """
     Run the labelling pipeline to extract labels from each detection
 
-    Inputs
-    ------
+    Parameters:
+    -----------
     vert_dicts : list of dictionaries
         The output from the detection stage. Each dictionary contains information about each vertebra detected.
     scan : np.array

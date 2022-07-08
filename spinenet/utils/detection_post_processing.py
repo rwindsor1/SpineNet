@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import torch
 import numpy as np
 import torch.nn.functional as F
@@ -37,13 +38,11 @@ def make_in_slice_detections(
     detection_net.to(device)
     detection_net.eval()
     detection_dicts = []
+    patches_dicts = []
     # flatten patches and pass to network
     # patches_flat_list = [patch for slice_list in patches for patch in slice_list]
     # patches_tensor = torch.stack(patches_flat_list, dim=0).unsqueeze(1)
 
-    # with torch.no_grad():
-    #    all_slices_net_output = detection_net(patches_tensor.cuda().float()).cpu()
-    # loop through outputs for each slice and process them seperately
     for slice_idx in range(len(patches)):
         patches_tensor = torch.stack(patches[slice_idx], dim=0)[:, None, :, :]
         flipped_patches_tensor = torch.flip(patches_tensor, [-1])
@@ -51,20 +50,17 @@ def make_in_slice_detections(
         with torch.no_grad():
             # both_net_output = detection_net(net_input.to(device).float()).cpu()
             net_output = detection_net(patches_tensor.to(device).float()).cpu()
-        # flipped_net_output = torch.flip(both_net_output[patches_tensor.shape[0]:],[-1])
-        # flipped_net_output = flipped_net_output[:,[3,2,1,0,4,8,7,6,5,12,11,10,9]]
-        # flipped_net_output[:,5:9] = -flipped_net_output[:,5:9]
-        # net_output = (flipped_net_output+both_net_output[:patches_tensor.shape[0]])/2
-        # normal_net_output =  both_net_output[:patches_tensor.shape[0]]
-        # output of network at slice indexed by slice_idx
-        # net_output = all_slices_net_output[slice_counter:slice_counter+len(patches[slice_idx])]
-        # update the slice counter to process next slice
-        # if slice_idx == 25: import pdb; pdb.set_trace()
+
+        patches_dicts.append({"patches": patches_tensor.numpy(), "net_output": net_output.numpy(), 
+                              "landmark_points": {}, "landmark_arrows": {}})
 
         all_corners = {"points": {}, "arrows": {}}
         for corner_type in ["rt", "rb", "lb", "lt"]:
             all_corners["points"][corner_type] = []
             all_corners["arrows"][corner_type] = []
+            patches_dicts[-1]["landmark_points"][corner_type] = []
+            patches_dicts[-1]["landmark_arrows"][corner_type] = []
+
 
         scan_centroid_channel = np.zeros(scan_shape[0:2]).astype(float)
         centroid_channel_contributions = np.zeros_like(scan_centroid_channel)
@@ -121,6 +117,8 @@ def make_in_slice_detections(
                     net_output[j, corner_idx, :, :], threshold=corner_threshold
                 )
                 if len(points) == 0:
+                    patches_dicts[-1]["landmark_points"][corner_type].append([])
+                    patches_dicts[-1]["landmark_arrows"][corner_type].append([])
                     continue
                 else:
                     if transform_info["y1"] < 0:
@@ -148,6 +146,9 @@ def make_in_slice_detections(
                     all_corners["arrows"][corner_type].append(
                         arrows * patch_edge_len / 224
                     )
+                    patches_dicts[-1]["landmark_points"][corner_type].append(points)
+                    patches_dicts[-1]["landmark_arrows"][corner_type].append(arrows)
+
 
         # disp_corners contained the displaced corners, i.e. the vector sum
         # of the corner position and its arrow. These displaced corners are used
@@ -260,7 +261,7 @@ def make_in_slice_detections(
         all_corners["vert_index"] = [None] * len(detection_polys)
         detection_dicts.append(all_corners)
 
-    return detection_dicts
+    return detection_dicts, patches_dicts
 
 
 def remove_polys_sharing_corners(detection_polys, all_corners):

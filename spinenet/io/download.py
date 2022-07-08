@@ -1,6 +1,9 @@
 import os
+import warnings
+
 import requests
-from tqdm import tqdm 
+from tqdm import tqdm
+
 
 def download(url: str, fname: str, verbose: bool = True) -> None:
     '''
@@ -58,4 +61,5 @@ def download_weights(weights_path: str, weight_urls_dict: dict, force: bool = Fa
         if not os.path.exists(fname) or force:
             download(url, fname, verbose=verbose)
         else:
-            raise ValueError(f"{fname} already exists! Use force=True to overwrite.")
+            warnings.warn('{} already exists. Skipping download.'.format(fname))
+            return

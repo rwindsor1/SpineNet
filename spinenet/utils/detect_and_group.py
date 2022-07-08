@@ -8,7 +8,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage
-from .scan_preprocessing import split_into_patches, split_into_patches_exhaustive
+from .scan_preprocessing import split_into_patches_exhaustive
 from .detection_post_processing import make_in_slice_detections
 
 
@@ -66,7 +66,7 @@ def detect_and_group(
         scan, pixel_spacing=pixel_spacing, overlap_param=0.4, using_resnet=using_resnet
     )
     # group the detections made in each patch into slice level detections
-    detection_dicts = make_in_slice_detections(
+    detection_dicts, patches_dicts = make_in_slice_detections(
         detection_net,
         patches,
         transform_info_dicts,
@@ -85,7 +85,7 @@ def detect_and_group(
     if not debug:
         return vert_dicts
     else:
-        return vert_dicts, patches, detection_dicts, transform_info_dicts
+        return vert_dicts, patches, patches_dicts, detection_dicts, transform_info_dicts
 
 
 def group_slice_detections(
@@ -154,7 +154,7 @@ def group_slice_detections(
             iou = get_poly_iou(
                 vert_dict["average_polygon"], other_vert_dict["average_polygon"]
             )
-            if iou > 0.15:
+            if iou > 0.5:
                 match_vert_idxs.append([vert_idx, other_vert_idx])
 
     # join the matching verts

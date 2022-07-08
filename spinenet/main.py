@@ -155,7 +155,7 @@ class SpineNet:
             debug=debug,
         )
         if debug:
-            vert_dicts, patches, detection_dicts, transform_info_dicts = detect_ans
+            vert_dicts, patches, patches_dicts, detection_dicts, transform_info_dicts = detect_ans
         else:
             vert_dicts = detect_ans
 
@@ -185,6 +185,7 @@ class SpineNet:
             return (
                 vert_dicts,
                 patches,
+                patches_dicts,
                 detection_dicts,
                 transform_info_dicts,
                 height_scaled_appearance_features,
