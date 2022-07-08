@@ -3,6 +3,8 @@
 To do:
 - [x] Detection and labelling pipeline
 - [x] Grading pipeline
+- [x] Basic Tutorials on using SpineNet
+- [ ] Add acknowledgement for example scans
 - [ ] Training/Finetuning Grading Model Tutorial
 - [ ] Write Documentation
 - [ ] Pip-installable
