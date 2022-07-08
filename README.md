@@ -20,6 +20,15 @@ As well as using SpineNet for detecting and labelling vertebral bodies and the e
 
 (To be added: pip installation)
 
+### Install enviroments
+A minimal conda environment for running SpineNet can be found in `requirements.txt` and can be installed used
+
+```
+$ conda create --name spinenet_env --file requirements.txt
+```
+
+### Running The Code
+
 Clone the repository and add the root directory to your PYTHONPATH, e.g. via
 ```
 $ export PYTHONPATH=$PYTHONPATH:/path/to/SpineNet
