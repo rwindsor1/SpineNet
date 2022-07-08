@@ -9,6 +9,7 @@ To do:
 - [ ] Write Documentation
 - [ ] Pip-installable
 - [ ] Note on using for non-commerical tasks only (ask AZ for draft)
+- [ ] Add license
 
 ## Introduction
 
