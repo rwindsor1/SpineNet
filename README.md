@@ -1,6 +1,6 @@
-<img align='center' width='100%' src='spinenet_logo1.png'> 
-# SpineNet
-
+<p align="center">
+<img width='100%' src='spinenet_logo1.png'> 
+</p>
 To do:
 - [x] Detection and labelling pipeline
 - [x] Grading pipeline
