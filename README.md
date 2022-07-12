@@ -1,4 +1,4 @@
-<img align='center' width='50%' src='http://zeus.robots.ox.ac.uk/spinenet2/images/spinenet_logo1.png'> 
+<img align='center' width='50%' src='spinenet_logo1.png'> 
 # SpineNet
 
 To do:
