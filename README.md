@@ -1,5 +1,4 @@
-![SpineNet Logo](spinenetlogo.png)
-
+<img align='center' width='50%' src='spinenetlogo.png'> 
 # SpineNet
 
 To do:
