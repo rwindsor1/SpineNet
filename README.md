@@ -1,3 +1,5 @@
+![SpineNet Logo](spinenetlogo.png)
+
 # SpineNet
 
 To do:
