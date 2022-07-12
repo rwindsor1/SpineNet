@@ -15,6 +15,11 @@ As well as using SpineNet for detecting and labelling vertebral bodies and the e
 
 Please note that by using SpineNet you agree to our [terms of access](LICENCE.md). Amongst other things, this prohibits the use of SpineNet for commerical purposes. If you wish to acquire a more permissive licence of SpineNet, please contact us.
 
+
+<p align="center">
+<img width='100%' src='pipeline-overview.png'> 
+</p>
+
 ## Getting Started
 
 (To be added: pip installation)
