@@ -9,8 +9,8 @@ To do:
 - [ ] Training/Finetuning Grading Model Tutorial
 - [ ] Write Documentation
 - [ ] Pip-installable
-- [ ] Note on using for non-commerical tasks only (ask AZ for draft)
-- [ ] Add license
+- [x] Note on using for non-commerical tasks only (ask AZ for draft)
+- [x] Add license
 
 ## Introduction
 
