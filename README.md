@@ -2,16 +2,7 @@
 <img width='100%' src='spinenet_logo1.png'> 
 </p>
 
-To do:
-- [x] Detection and labelling pipeline
-- [x] Grading pipeline
-- [x] Basic Tutorials on using SpineNet
-- [ ] Add acknowledgement for example scans
-- [ ] Training/Finetuning Grading Model Tutorial
-- [ ] Write Documentation
-- [ ] Pip-installable
-- [x] Note on using for non-commerical tasks only (ask AZ for draft)
-- [x] Add license
+
 
 ## Introduction
 
@@ -74,4 +65,13 @@ You may also wish to cite our other works in this area:
 
 "ISSLS PRIZE IN BIOENGINEERING SCIENCE 2017: Automation of reading of radiological features from magnetic resonance images (MRIs) of the lumbar spine without human intervention is comparable with an expert radiologist", (2017) Amir Jamaludin, Meelis Lootus, Timor Kadir, Andrew Zisserman, Jill Urban, Michele C. Battié, Jeremy Fairbank, Iain McCall & The Genodisc Consortium, *European Spine Journal 26, p 1374–1383*
 
-
+To do:
+- [x] Detection and labelling pipeline
+- [x] Grading pipeline
+- [x] Basic Tutorials on using SpineNet
+- [ ] Add acknowledgement for example scans
+- [ ] Training/Finetuning Grading Model Tutorial
+- [ ] Write Documentation
+- [ ] Pip-installable
+- [x] Note on using for non-commerical tasks only (ask AZ for draft)
+- [x] Add license
