@@ -1,4 +1,4 @@
-<img align='center' width='50%' src='spinenet_logo1.png'> 
+<img align='center' width='100%' src='spinenet_logo1.png'> 
 # SpineNet
 
 To do:
