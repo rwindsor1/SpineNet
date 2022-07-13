@@ -72,7 +72,7 @@ You may also wish to cite our other works in this area:
 
 ## Example Scan Attribution
 
-We are grateful to the providers of the example scans used in the tutorials (originally from [radiopedia.org](radiopedia.org)
+We are grateful to the providers of the example scans used in the tutorials (originally from [radiopedia.org](radiopedia.org)).
 - 't2_lumbar_scan_1': [Case Contributed by Assoc Prof Frank Gaillard](https://radiopaedia.org/cases/normal-lumbar-spine-mri?lang=gb)
 - 't2_lumbar_scan_2': [Case Contributed by Dr Henry Knipe](https://radiopaedia.org/cases/schmorl-node-acute-10?lang=gb)
 - 'stir_whole_spine': [Case contributed by Dr Ian Bickle](https://radiopaedia.org/cases/normal-mri-whole-spine-3-t?lang=gb)
