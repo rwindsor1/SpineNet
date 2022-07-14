@@ -15,6 +15,11 @@ As well as using SpineNet for detecting and labelling vertebral bodies and the e
 
 Please note that by using SpineNet you agree to our [terms of access](LICENCE.md). Amongst other things, this prohibits the use of SpineNet for commerical purposes. If you wish to acquire a more permissive licence of SpineNet, please contact us.
 
+
+<p align="center">
+<img width='100%' src='pipeline-overview.png'> 
+</p>
+
 ## Getting Started
 
 (To be added: pip installation)
@@ -64,6 +69,13 @@ You may also wish to cite our other works in this area:
 "SpineNet: Automated classification and evidence visualization in spinal MRIs" (2017), Amir Jamaludin, Timor Kadir, Andrew Zisserman, *Medical Image Analysis 41, p 63-73*.
 
 "ISSLS PRIZE IN BIOENGINEERING SCIENCE 2017: Automation of reading of radiological features from magnetic resonance images (MRIs) of the lumbar spine without human intervention is comparable with an expert radiologist", (2017) Amir Jamaludin, Meelis Lootus, Timor Kadir, Andrew Zisserman, Jill Urban, Michele C. Battié, Jeremy Fairbank, Iain McCall & The Genodisc Consortium, *European Spine Journal 26, p 1374–1383*
+
+## Example Scan Attribution
+
+We are grateful to the providers of the example scans used in the tutorials (originally from [radiopedia.org](radiopedia.org)).
+- 't2_lumbar_scan_1': [Case Contributed by Assoc Prof Frank Gaillard](https://radiopaedia.org/cases/normal-lumbar-spine-mri?lang=gb)
+- 't2_lumbar_scan_2': [Case Contributed by Dr Henry Knipe](https://radiopaedia.org/cases/schmorl-node-acute-10?lang=gb)
+- 'stir_whole_spine': [Case contributed by Dr Ian Bickle](https://radiopaedia.org/cases/normal-mri-whole-spine-3-t?lang=gb)
 
 To do:
 - [x] Detection and labelling pipeline
