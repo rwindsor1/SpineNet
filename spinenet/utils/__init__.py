@@ -10,4 +10,3 @@ from .gt_formatting import *
 
 # Classification
 from .classification import classify_ivd, classify_ivd_v2_resnet
-from .io import *

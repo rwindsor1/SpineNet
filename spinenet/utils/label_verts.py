@@ -164,7 +164,7 @@ def label_verts(
             for key in list(vert_dict.keys()):
                 if key not in ["predicted_label", "slice_nos", "polys","average_polygon"]:
                     del vert_dict[key]
-            vert_dicts[idx] = vert_dict
+            vert_dicts[vert_dict_idx] = vert_dict
         return vert_dicts
 
 

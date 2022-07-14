@@ -154,8 +154,9 @@ def group_slice_detections(
             iou = get_poly_iou(
                 vert_dict["average_polygon"], other_vert_dict["average_polygon"]
             )
-            if iou > 0.5:
+            if iou > 0.05:
                 match_vert_idxs.append([vert_idx, other_vert_idx])
+                print('merging')
 
     # join the matching verts
     for matching_vert_pair in match_vert_idxs:
@@ -168,6 +169,7 @@ def group_slice_detections(
         vert_dicts[matching_vert_pair[0]]["average_polygon"] = np.mean(
             vert_dicts[matching_vert_pair[0]]["polys"], axis=0
         )
+        print(f"merging vert {matching_vert_pair[0]} with {matching_vert_pair[1]}")
 
     # remove extra verts
     for matching_vert_pair in sorted(match_vert_idxs, key=lambda x: x[1], reverse=True):

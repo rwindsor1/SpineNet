@@ -838,7 +838,7 @@ def get_all_vus_vol(
 def vert_dicts_to_classification_format(vert_dicts, no_slices):
     """Converts detection output of VFR detector to format that can be read by the classification pipeline"""
     vert_dicts = sorted(
-        vert_dicts, key=lambda x: x["average_polygon"][:, 1].mean(), reverse=True
+        vert_dicts, key=lambda x: np.array(x["average_polygon"])[:, 1].mean(), reverse=True
     )
     all_vb_x = np.zeros((4, len(vert_dicts), no_slices))
     all_vb_y = np.zeros((4, len(vert_dicts), no_slices))
@@ -847,10 +847,10 @@ def vert_dicts_to_classification_format(vert_dicts, no_slices):
     for vert_dict_idx, vert_dict in enumerate(vert_dicts):
         # begin by filling all entries with the average polygon
         all_vb_x[:, vert_dict_idx, :] = np.stack(
-            [vert_dict["average_polygon"][:, 0]] * no_slices, axis=-1
+            [np.array(vert_dict["average_polygon"])[:, 0]] * no_slices, axis=-1
         )
         all_vb_y[:, vert_dict_idx, :] = np.stack(
-            [vert_dict["average_polygon"][:, 1]] * no_slices, axis=-1
+            [np.array(vert_dict["average_polygon"])[:, 1]] * no_slices, axis=-1
         )
         for poly_idx, poly in enumerate(vert_dict["polys"]):
             slice_no = vert_dict["slice_nos"][poly_idx]

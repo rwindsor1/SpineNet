@@ -1,6 +1,7 @@
 # SpineNet Specific
 spinenet/weights/*
 tutorials/example_scans/*
+tutorials/results/*
 
 
 # Standard Python GitIgnore
