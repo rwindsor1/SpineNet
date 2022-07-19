@@ -9,7 +9,20 @@ SpineNet is software created and maintained by the Visual Geometry Group at the 
 
 Note that we do not guarantee that the link or content will always be available, that it is accurate, free of viruses and bugs, or functions as stated in documentation. You use the content entirely at your own risk.
 
-**What can I use it for?** Provided the terms of access are adhered to, the University grants you (i.e., the researcher) under a non-exclusive licence the right to use the content free of charge strictly for non-commercial research. You are responsible for your own costs in using the content.
+**What can I use it for?** Provided the terms of access are adhered to, the University grants you (i.e., the researcher) under a non-exclusive licence the right to use the content free of charge strictly for non-commercial research. You are responsible for your own costs in using the content. *We are not liable*
+
+Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
 
 **What does non-commercial research mean?** By non-commercial research, we refer to any research activity that does not result in output artifacts to be used in a commerical product. This includes derivative work, for example modifications of the source-code. 
 
