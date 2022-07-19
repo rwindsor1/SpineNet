@@ -1,3 +1,5 @@
+**DISCLAIMER: SpineNet is not a diagnostics tool nor a medical device. It should only be used for research.**
+
 SpineNet is software created and maintained by the Visual Geometry Group at the University of Oxford. These terms of access tell you what you can do with the contents of SpineNet made publically available. You must not use the software if you do not agree to these terms.
 
 **To what content does this licence refer?**: This terms stated in this licence concern use of the following artifacts:
