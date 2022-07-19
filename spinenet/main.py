@@ -83,6 +83,7 @@ class SpineNet:
         if verbose:
             print("Loading Appearance Model...")
         self.appearance_model.load_weights(appearance_weights_path, verbose=verbose)
+        self.appearance_model.eval()
         self.appearance_model.to(device)
 
         # Setup - Context Model
@@ -95,7 +96,9 @@ class SpineNet:
         if verbose:
             print("Loading Context Model...")
         self.context_model.load_weights(context_weights_path, verbose=verbose)
+        self.context_model.eval()
         self.context_model.to(device)
+
 
         # Setup - Grading Model
         from .models.grading import GradingModel
@@ -107,6 +110,7 @@ class SpineNet:
         if verbose:
             print("Loading Grading Model...")
         self.grading_model.load_weights(grading_weights_path, verbose=verbose)
+        self.grading_model.eval()
         self.grading_model.to(device)
 
     def detect_vb(
