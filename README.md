@@ -2,7 +2,7 @@
 <img width='100%' src='spinenetlogo.png'> 
 </p>
 
-** DISCLAIMER: This is not a diagnostics tool nor a medical device and should only be used for research. **
+**DISCLAIMER: This is not a diagnostics tool nor a medical device and should only be used for research.**
 
 ## Introduction
 
