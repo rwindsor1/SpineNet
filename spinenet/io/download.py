@@ -56,6 +56,11 @@ def download_weights(weights_path: str, weight_urls_dict: dict, force: bool = Fa
     verbose : bool, optional
         Whether to print progress information. The default is True.
     '''
+    print('-' * 80)
+    print('Downloading weights...')
+    print("Note: By downloading these weights and/or adapting SpineNet's source code, you agree to the licence which can be found here: https://github.com/rwindsor1/SpineNet/blob/main/LICENCE.md")
+    print('SpineNet is not a diagnostics tool nor a medical device. It should only be used for research.')
+    print('-' * 80)
     for path, url in weight_urls_dict.items():
         fname = os.path.join(weights_path, path)
         if not os.path.exists(fname) or force:
