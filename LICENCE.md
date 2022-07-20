@@ -12,10 +12,6 @@ SpineNet is software created and maintained by the Visual Geometry Group at the 
 
 **What does non-commercial research mean?** By non-commercial research, we refer to any research activity that does not result in output artifacts to be used in a commerical product. This includes derivative work, for example modifications of the source-code. 
 
-**Limitation of Liability**. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any project contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as aresult of this License or out of the use or inability to use the work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such contributor has been advised of the possibility of such damages.
-
-**Warranty Disclaimer** Note that we do not guarantee that the link or content will always be available, that it is accurate, free of viruses and bugs, or functions as stated in documentation. You use the content entirely at your own risk. 
-
 
 **Can I distribute modifications of the software?**: You may release/distribute modified versions of the source-code provided:
 1. The modified version has a substantial modification or improvement to the original code's functionality. For example, a version of SpineNet with a new or improved grading system.
@@ -37,3 +33,8 @@ You shall notify the University promptly of:
 3. Any allegation by any person that the use of the whole or any part of any of the content infringes the rights of any third party.
 
 All rights not expressly granted to you under these terms are reserved to the University and/or its third-party licensors, and you shall make no use of the content except as expressly permitted by this Agreement. You shall permit the University to take such steps as the University reasonably considers appropriate to monitor compliance with the terms of this Agreement and shall co-operate fully with the University in relation to such monitoring.
+
+
+**Limitation of Liability**. In no event and under no legal theory, whether in tort (including negligence), contract, or otherwise, unless required by applicable law (such as deliberate and grossly negligent acts) or agreed to in writing, shall any project contributor be liable to You for damages, including any direct, indirect, special, incidental, or consequential damages of any character arising as aresult of this License or out of the use or inability to use the work (including but not limited to damages for loss of goodwill, work stoppage, computer failure or malfunction, or any and all other commercial damages or losses), even if such contributor has been advised of the possibility of such damages.
+
+**Warranty Disclaimer** Note that we do not guarantee that the link or content will always be available, that it is accurate, free of viruses and bugs, or functions as stated in documentation. You use the content entirely at your own risk. 
