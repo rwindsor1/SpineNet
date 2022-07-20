@@ -7,11 +7,25 @@ SpineNet is software created and maintained by the Visual Geometry Group at the 
 - Publicly-available pretrained network parameters
 - Output produced by either of the previous two components
 
-Note that we do not guarantee that the link or content will always be available, that it is accurate, free of viruses and bugs, or functions as stated in documentation. You use the content entirely at your own risk.
 
-**What can I use it for?** Provided the terms of access are adhered to, the University grants you (i.e., the researcher) under a non-exclusive licence the right to use the content free of charge strictly for non-commercial research. You are responsible for your own costs in using the content.
+**What can I use it for?** Provided the terms of access are adhered to, the University grants you (i.e., the researcher) under a non-exclusive licence the right to use the content free of charge strictly for non-commercial research. You are responsible for your own costs in using the content. *We are not liable*
 
 **What does non-commercial research mean?** By non-commercial research, we refer to any research activity that does not result in output artifacts to be used in a commerical product. This includes derivative work, for example modifications of the source-code. 
+
+Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+**Warranty** Note that we do not guarantee that the link or content will always be available, that it is accurate, free of viruses and bugs, or functions as stated in documentation. You use the content entirely at your own risk.
+
 
 **Can I distribute modifications of the software?**: You may release/distribute modified versions of the source-code provided:
 1. The modified version has a substantial modification or improvement to the original code's functionality. For example, a version of SpineNet with a new or improved grading system.
