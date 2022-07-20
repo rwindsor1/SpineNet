@@ -22,8 +22,6 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
 
 ## Getting Started
 
-(To be added: pip installation)
-
 ### Install enviroments
 A minimal conda environment for running SpineNet can be found in `requirements.txt` and can be installed used
 
@@ -77,13 +75,10 @@ We are grateful to the providers of the example scans used in the tutorials (ori
 - 't2_lumbar_scan_2': [Case Contributed by Dr Henry Knipe](https://radiopaedia.org/cases/schmorl-node-acute-10?lang=gb)
 - 'stir_whole_spine': [Case contributed by Dr Ian Bickle](https://radiopaedia.org/cases/normal-mri-whole-spine-3-t?lang=gb)
 
-To do:
-- [x] Detection and labelling pipeline
-- [x] Grading pipeline
-- [x] Basic Tutorials on using SpineNet
-- [x] Add acknowledgement for example scans
-- [ ] Training/Finetuning Grading Model Tutorial
-- [ ] Write Documentation
-- [ ] Pip-installable
-- [x] Note on using for non-commerical tasks only (ask AZ for draft)
-- [x] Add license
+## Coming Soon
+
+- [ ] Documentation
+- [ ] Pip installation
+- [ ] In-depth tutorials on finetuning SpineNet's grading network
+
+We are always looking to extend SpineNet to make it a more useful tool. If you have a request for features please get in touch with us.
