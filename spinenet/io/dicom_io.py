@@ -30,15 +30,16 @@ class SpinalScan:
         self.slice_thickness = slice_thickness
 
 
-class DICOMScan(SpinalScan):
-    def __init__(
-        self,
+def load_dicoms(
         paths: List[Union[os.PathLike, str, bytes]],
         require_extensions: bool = True,
         metadata_overwrites: dict = {},
-    ) -> None:
+    ) -> SpinalScan:
         '''
-        Initialize instance of DICOMScan.
+        Generate SpinalScan from paths to each DICOM slice,
+        with checks such as ensure that the correct tags are present
+        and that scan is sagittal
+
 
         Parameters
         ----------
@@ -48,6 +49,10 @@ class DICOMScan(SpinalScan):
             flag to require that all DICOM files in the `paths` list have the same `.dcm` extension
         metadata_overwrites : dict
             dictionary of metadata to overwrite in the scan. This can be PixelSpacing, SliceThickness and ImageOrientationPatient (which should be sagittal)
+
+        Returns
+        -------
+        SpinalScan
         '''
 
         if require_extensions:
@@ -87,7 +92,7 @@ class DICOMScan(SpinalScan):
             [np.array(dicom_file.pixel_array) for dicom_file in dicom_files], axis=-1
         )
 
-        super().__init__(
+        return SpinalScan(
             volume=volume, pixel_spacing=pixel_spacing, slice_thickness=slice_thickness
         )
 
@@ -160,7 +165,6 @@ def check_missing_tags(dicom_file: FileDataset) -> List[str]:
     ----------
     dicom_file : FileDataset
         dicom file to check
-    
     Returns
     -------
     List[str]
@@ -193,11 +197,11 @@ def is_dicom_file(path: Union[os.PathLike, str, bytes]) -> bool:
         return False
 
 
-def load_dicom_from_folder(
+def load_dicoms_from_folder(
     path: Union[os.PathLike, str, bytes],
     require_extensions: bool = True,
     metadata_overwrites: dict = {},
-) -> DICOMScan:
+) -> SpinalScan:
     '''
     Load a DICOM scan from a folder containing each of the slices.
 
@@ -207,12 +211,12 @@ def load_dicom_from_folder(
         path to folder containing dicom slices
     require_extensions : bool
         if True, requires all dicom files in the folder must have the extension .dcm.
-    
+
     Returns
     -------
-    DICOMScan
-        DICOMScan object representing the scan
+    SpinalScan
+        SpinalScan object representing the scan
     '''
     slices = [f for f in glob.glob(os.path.join(path, "*")) if is_dicom_file(f)]
 
-    return DICOMScan(slices, require_extensions, metadata_overwrites)
+    return load_dicoms(slices, require_extensions, metadata_overwrites)
