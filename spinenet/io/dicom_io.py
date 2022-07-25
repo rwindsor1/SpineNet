@@ -40,7 +40,6 @@ def load_dicoms(
         with checks such as ensure that the correct tags are present
         and that scan is sagittal
 
-
         Parameters
         ----------
         paths : List[Union[os.PathLike, str, bytes]]
@@ -49,10 +48,6 @@ def load_dicoms(
             flag to require that all DICOM files in the `paths` list have the same `.dcm` extension
         metadata_overwrites : dict
             dictionary of metadata to overwrite in the scan. This can be PixelSpacing, SliceThickness and ImageOrientationPatient (which should be sagittal)
-
-        Returns
-        -------
-        SpinalScan
         '''
 
         if require_extensions:
@@ -212,10 +207,6 @@ def load_dicoms_from_folder(
     require_extensions : bool
         if True, requires all dicom files in the folder must have the extension .dcm.
 
-    Returns
-    -------
-    SpinalScan
-        SpinalScan object representing the scan
     '''
     slices = [f for f in glob.glob(os.path.join(path, "*")) if is_dicom_file(f)]
 
