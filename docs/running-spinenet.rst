@@ -23,6 +23,17 @@ You can create members of this class to be run by SpineNet using the above initi
 
 
 
-However, it is probably better to use 
+However, it is probably better to use the helper functions for loading in DICOMs as scans;
+:py:func:`spinenet.io.load_dicoms` and :py:func:`spinenet.io.load_dicoms_from_folder`. Both these
+scans have similar functions; they load DICOM files into a :py:class:`spinenet.io.SpinalScan` which
+can be then used by the rest of SpineNet's pipeline.
+
+:py:ext:`spinenet.io.load_dicoms` takes a list of DICOM file paths:
+
+.. autofunction:: spinenet.io.load_dicoms
+
+:py:ext:`spinenet.io.load_dicoms_from_folder` takes a path to a directory containing DICOM files:
+
+.. autofunction:: spinenet.io.load_dicoms_from_folder
 
 

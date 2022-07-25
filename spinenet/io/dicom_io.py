@@ -48,6 +48,11 @@ def load_dicoms(
             flag to require that all DICOM files in the `paths` list have the same `.dcm` extension
         metadata_overwrites : dict
             dictionary of metadata to overwrite in the scan. This can be PixelSpacing, SliceThickness and ImageOrientationPatient (which should be sagittal)
+
+        Returns
+        -------
+        SpinalScan
+            Object representing scan from the DICOM files
         '''
 
         if require_extensions:
@@ -160,6 +165,7 @@ def check_missing_tags(dicom_file: FileDataset) -> List[str]:
     ----------
     dicom_file : FileDataset
         dicom file to check
+
     Returns
     -------
     List[str]
@@ -207,6 +213,10 @@ def load_dicoms_from_folder(
     require_extensions : bool
         if True, requires all dicom files in the folder must have the extension .dcm.
 
+    Returns
+    -------
+    SpinalScan
+        Object representing scan from the DICOM files
     '''
     slices = [f for f in glob.glob(os.path.join(path, "*")) if is_dicom_file(f)]
 
