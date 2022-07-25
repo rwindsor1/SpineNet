@@ -23,10 +23,12 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
 ## Getting Started
 
 ### Install enviroments
-A minimal conda environment for running SpineNet can be found in `requirements.txt` and can be installed used
+A minimal python environment for running SpineNet can be found in `requirements.txt` and can be installed used
 
 ```
-$ conda create --name spinenet_env --file requirements.txt
+$ python -m venv spinenet-venv
+$ source spinenet-venv/bin/activate
+$ pip install -r requirements.txt
 ```
 
 ### Running The Code
