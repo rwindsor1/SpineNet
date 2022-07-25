@@ -10,11 +10,15 @@ Currently, SpineNet can only be installed by cloning the git repository:
 
    git clone git@github.com:rwindsor1/SpineNet.git
 
-Once this is done, you can then install a minimal conda environment to run the project.
+Once this is done, you can then install a minimal python virtual enviroment to run the project.
 
 .. code-block:: console
 
-   pip c
+   python -m venv spinenet-venv
+   source spinenet-venv/bin/activate
+   pip install -r requirements.txt
+
+
 
 Finally, add spinenet to your python path so it can be imported into scripts:
 
