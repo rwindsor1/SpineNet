@@ -15,6 +15,7 @@ SpineNet is automated software for analysing clinical spinal MRI scans. Current 
 As well as using SpineNet for detecting and labelling vertebral bodies and the existing radiological gradings, you can also use the codebase for finetuning the model to perform additional gradings. For example, we have previously adapted it to detect vertebral fractures, cauda equina, ankylosing spondylitis and other diseases.
 
 .. note::
+
 Please note that by using SpineNet you agree to our [terms of access](LICENCE.md). Amongst other things, this prohibits the use of SpineNet for commerical purposes. If you wish to acquire a more permissive licence of SpineNet, please contact us.
 
 .. toctree::

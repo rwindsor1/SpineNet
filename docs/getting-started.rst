@@ -30,9 +30,9 @@ them at the location expected by the code.
 
 This can be done automatically by starting a python environment and running the following script:
 
+
 .. code-block:: python 
 
         import python
         spinenet.download_weights(verbose=True)
-
 

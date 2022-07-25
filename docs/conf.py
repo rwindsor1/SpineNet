@@ -1,3 +1,9 @@
+
+import pathlib
+import sys
+sys.path.insert(0, pathlib.Path(__file__).absolute().parents[1].resolve().as_posix())
+
+
 # Configuration file for the Sphinx documentation builder.
 #
 # For the full list of built-in configuration values, see the documentation:
@@ -14,7 +20,10 @@ release = 'v2.0.0'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx.ext.doctest',
+    'sphinx.ext.autodoc'
+]
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
