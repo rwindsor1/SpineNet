@@ -1,4 +1,5 @@
 # SpineNet Specific
+spinenet-venv
 spinenet/weights/*
 tutorials/example_scans/*
 tutorials/results/*
