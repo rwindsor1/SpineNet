@@ -13,18 +13,18 @@ class SpinalScan:
         pixel_spacing: Union[np.array, list],
         slice_thickness: Union[float, int],
     ) -> None:
-        '''
+        """
         Initialize general class for a spinal scan to be used be SpineNet.
 
         Parameters
         ----------
         volume : np.array
-            The volume of the scan voxels (of the orientation height x width x sagittal slices). 
-        pixel_spacing : Union[np.array, list]   
+            The volume of the scan voxels (of the orientation height x width x sagittal slices).
+        pixel_spacing : Union[np.array, list]
             The pixel spacing of the scan slices in mm. The order is height, width.
         slice_thickness : Union[float, int]
             The distance between consecutive slices in mm.
-        '''
+        """
         self.volume = volume
         self.pixel_spacing = pixel_spacing
         self.slice_thickness = slice_thickness
