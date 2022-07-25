@@ -6,8 +6,23 @@ This section assumes that you have already installed SpineNet, see :doc:`getting
 Scan IO
 -------
 
-SpineNet interfaces with scans through the `SpinalScan` object. This is a simple wrapper class around the three variables SpineNet needs to run,namely the voxel data (volume), spacing between pixels in each slice and the space between each slice.
+SpineNet interfaces with scans through the :py:class:`spinenet.io.SpinalScan` object. This is a simple wrapper class around the three variables SpineNet needs to run,namely the voxel data (volume), spacing between pixels in each slice and the space between each slice.
 
 .. autoclass:: spinenet.io.SpinalScan
    :special-members: __init__
+
+You can create members of this class to be run by SpineNet using the above initialisation method, e.g. by 
+
+.. code-block:: python
+
+        volume = np.random.rand(512,512,12) # random voxel data for scan; 12 slices of size 512x512
+        pixel_spacing = [0.5, 0.5] # distance between each pixel is to 0.5mm 
+        slice_thickness = 2.0 # distance between slices is 2.0mm
+        # initialize scan object
+        scan = spinenet.io.SpinalScan(volume, pixel_spacing, slice_thickness)
+
+
+
+However, it is probably better to use 
+
 
