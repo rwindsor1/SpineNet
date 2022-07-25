@@ -23,6 +23,8 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
    :caption: Contents:
 
    getting-started
+   running-spinenet
+   api
 
 
 

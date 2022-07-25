@@ -14,7 +14,7 @@ Once this is done, you can then install a minimal conda environment to run the p
 
 .. code-block:: console
 
-   conda create --name spinenet_env --file requirements.txt
+   pip c
 
 Finally, add spinenet to your python path so it can be imported into scripts:
 
@@ -36,3 +36,4 @@ This can be done automatically by starting a python environment and running the 
         import python
         spinenet.download_weights(verbose=True)
 
+.. autofunction:: spinenet.download_weights
