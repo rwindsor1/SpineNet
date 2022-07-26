@@ -39,4 +39,21 @@ Alternatively, for a folder containing DICOM files, use :py:func:`spinenet.io.lo
 Example Scans
 -------------
 
-To give some example data to try SpineNet on, the repository includes helper functions to download example scans; c
+To try SpineNet on some example data, you can download the example scans from our server via :py:func:`spinenet.download_example_scan`
+as follows
+
+.. code-block:: python
+
+   os.mkdir('example_scans')
+   spinenet.download_example_scan('t2_lumbar_scan_1', './example_scans')
+
+   # some of the example scans do not have the requisite DICOM headers, so
+   # we can insert our own values using the `metadata_overwrites` argument
+   overwrite_dict = {'SliceThickness': [2], 'ImageOrientationPatient': [0, 1, 0, 0, 0, -1]}
+
+   # load scan
+   spinenet.io.load_dicoms_from_folder('example_scans',require_extensions=False, metadata_overwrites=overwrite_dict)
+
+
+.. autofunction:: spinenet.download_example_scan
+ 
