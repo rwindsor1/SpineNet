@@ -16,7 +16,7 @@ As well as using SpineNet for detecting and labelling vertebral bodies and the e
 
 .. note::
 
-Please note that by using SpineNet you agree to our [terms of access](LICENCE.md). Amongst other things, this prohibits the use of SpineNet for commerical purposes. If you wish to acquire a more permissive licence of SpineNet, please contact us.
+Please note that by using SpineNet you agree to our `terms of access <https://github.com/rwindsor1/SpineNet/blob/main/LICENCE.md>`_. Amongst other things, this prohibits the use of SpineNet for commerical purposes. If you wish to acquire a more permissive licence of SpineNet, please contact us.
 
 .. toctree::
    :maxdepth: 2
@@ -24,6 +24,7 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
 
    getting-started
    loading-scans
+   running-spinenet
    api
 
 
