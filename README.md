@@ -22,6 +22,7 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
 
 ## Getting Started
 
+SpineNet's documentation is available [here](https://spinenet.readthedocs.io/en/latest)
 ### Install enviroments
 A minimal python environment for running SpineNet can be found in `requirements.txt` and can be installed used
 
