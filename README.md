@@ -80,7 +80,7 @@ We are grateful to the providers of the example scans used in the tutorials (ori
 
 ## Coming Soon
 
-- [ ] Documentation
+- [x] Documentation
 - [ ] Pip installation
 - [ ] In-depth tutorials on finetuning SpineNet's grading network
 
