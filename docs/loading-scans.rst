@@ -27,11 +27,11 @@ However, it is probably better to use the helper functions for loading in DICOMs
 scans have similar functions; they load DICOM files into a :py:class:`spinenet.io.SpinalScan` which
 can be then used by the rest of SpineNet's pipeline.
 
-:py:func:`spinenet.io.load_dicoms` takes a list of DICOM file paths:
+To use a list of DICOM file paths, use :py:func:`spinenet.io.load_dicoms`.
 
 .. autofunction:: spinenet.io.load_dicoms
 
-:py:func:`spinenet.io.load_dicoms_from_folder` takes a path to a directory containing DICOM files:
+Alternatively, for a folder containing DICOM files, use :py:func:`spinenet.io.load_dicoms_from_folder`.
 
 .. autofunction:: spinenet.io.load_dicoms_from_folder
 

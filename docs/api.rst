@@ -5,3 +5,5 @@ API
         :toctree: generated
 
         spinenet
+        spinenet.io
+        spinenet.SpineNet
