@@ -27,23 +27,6 @@ def save_vert_dicts_to_csv(vert_dicts: VertDicts, filename: str) -> None:
             w.writerow(vert_dict)
     return
 
-def save_grading_results_to_csv(grading_results: pd.DataFrame, filename: str) -> None:
-    '''
-    Saves the grading results to a file in csv format.
-
-    Parameters
-    ----------
-    grading_results: pd.DataFrame
-        A dataframe containing the grading results.
-    filename: str
-        The name of the file to save the grading results to.
-
-    '''
-    grading_results.to_csv(filename)
-    return
-
-
-
 
 def check_no_keys_missing(vert_dicts, required_keys):
     for vert_dict in vert_dicts:
