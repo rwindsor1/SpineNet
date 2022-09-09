@@ -37,7 +37,7 @@ This can be done automatically by starting a python environment and running the 
 
 .. code-block:: python 
 
-        import python
+        import spinenet
         spinenet.download_weights(verbose=True)
 
 .. autofunction:: spinenet.download_weights
