@@ -43,8 +43,8 @@ def extract_volumes(
 
         rotated_scan, new_bb = straighten_bb(scan, detection_poly)
 
-        new_bb_width = new_bb[:, 1].ptp()
-        new_bb_height = new_bb[:, 0].ptp()
+        new_bb_width = np.ptp(new_bb[:, 1])
+        new_bb_height = np.ptp(new_bb[:, 0])
         edge_len = np.max([new_bb_height, new_bb_width])
         y_min = int(new_bb[-1, 1] - extent * edge_len)
         x_min = int(new_bb[-1, 0] - extent * edge_len)
