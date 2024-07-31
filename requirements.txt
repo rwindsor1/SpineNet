@@ -10,3 +10,4 @@ shapely
 torch
 torchvision
 tqdm
+matplotlib

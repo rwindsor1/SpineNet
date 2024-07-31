@@ -81,7 +81,7 @@ We are grateful to the providers of the example scans used in the tutorials (ori
 ## Coming Soon
 
 - [x] Documentation
-- [ ] Pip installation
+- [x] Pip installation
 - [ ] In-depth tutorials on finetuning SpineNet's grading network
 
 We are always looking to extend SpineNet to make it a more useful tool. If you have a request for features please get in touch with us.
