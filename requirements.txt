@@ -1,4 +1,4 @@
-jupyterlab
+matplotlib
 numpy
 opencv-python
 pandas
