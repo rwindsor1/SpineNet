@@ -367,7 +367,7 @@ def poly2mask(vertex_row_coords, vertex_col_coords, shape):
     fill_row_coords, fill_col_coords = draw.polygon(
         vertex_row_coords, vertex_col_coords, shape
     )
-    mask = np.zeros(shape, dtype=np.bool)
+    mask = np.zeros(shape, dtype=bool)
     mask[fill_row_coords, fill_col_coords] = True
     return mask
 
@@ -390,10 +390,12 @@ def get_vbs_intensity(volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label):
     return vbs_intensity
 
 
-def rotate_bb_and_volume(volume, x, y, normalise=True):
-    height = volume.shape[0]
-    width = volume.shape[1]
+def rotate_bb_and_volume(volume, x, y, normalise=True, pixel_scale=(1, 1)):
+    # pixel_scale: (row, col) factors that make the pixels square
+    height = volume.shape[0] * pixel_scale[0]
+    width = volume.shape[1] * pixel_scale[1]
     depth = volume.shape[2]
+    x, y = x * pixel_scale[1], y * pixel_scale[0]
     theta = np.degrees(np.arctan2(y[0] - y[3], x[0] - x[3]))
 
     rotation_matrix = cv2.getRotationMatrix2D((width / 2, height / 2), theta, scale=1)
@@ -409,6 +411,8 @@ def rotate_bb_and_volume(volume, x, y, normalise=True):
     calculated = np.dot(rotation_matrix, v)
     qx = calculated[0]
     qy = calculated[1]
+    # the slices are warped from their own, possibly non-square, pixels
+    rotation_matrix[:, :2] *= pixel_scale[::-1]
 
     volume_rot = []
     for idx in range(depth):
@@ -450,13 +454,20 @@ def rotate_bb_and_volume(volume, x, y, normalise=True):
 
 
 def get_ivd_vol(
-    volume, ivd_curr_x, ivd_curr_y, vb_pair_median, curr_ivd_mid, norm_med, patch_size
+    volume,
+    ivd_curr_x,
+    ivd_curr_y,
+    vb_pair_median,
+    curr_ivd_mid,
+    norm_med,
+    patch_size,
+    pixel_scale=(1, 1),
 ):
     x = np.array(ivd_curr_x)
     y = np.array(ivd_curr_y)
 
     # Rotate
-    volume_rot, qx, qy = rotate_bb_and_volume(volume, x, y)
+    volume_rot, qx, qy = rotate_bb_and_volume(volume, x, y, pixel_scale=pixel_scale)
 
     # Add 50% width
     w = max(qx) - min(qx)
@@ -498,7 +509,7 @@ def get_ivd_vol(
         min_y += y_offset
         max_y += y_offset
     if max_y >= volume_rot.shape[0]:
-        y_offset = (abs(max_y) + 1) - volume_rot.shape[0]
+        y_offset = ((abs(max_y) + 1) - volume_rot.shape[0]).astype(int)
         volume_rot = np.concatenate(
             (
                 volume_rot,
@@ -520,7 +531,7 @@ def get_ivd_vol(
         min_x += x_offset
         max_x += x_offset
     if max_x >= volume_rot.shape[1]:
-        x_offset = (abs(max_x) + 1) - volume_rot.shape[1]
+        x_offset = ((abs(max_x) + 1) - volume_rot.shape[1]).astype(int)
         volume_rot = np.concatenate(
             (
                 volume_rot,
@@ -553,7 +564,56 @@ def get_ivd_vol(
     return ivd_vol
 
 
-def get_all_ivd_vol(volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label):
+def get_ivd_affine(
+    scan_shape, x, y, curr_ivd_mid, patch_size, output_shape, pixel_scale=(1, 1)
+):
+    """4x4 affine from IVD voxel (slice, row, col) to scan voxel (row, col, slice)."""
+    # Square pixels and rotation, as in rotate_bb_and_volume:
+    # scan (x, y) -> square pixels (x, y) -> rotated slice (qx, qy)
+    x, y = np.array(x) * pixel_scale[1], np.array(y) * pixel_scale[0]
+    width, height = scan_shape[1] * pixel_scale[1], scan_shape[0] * pixel_scale[0]
+    theta = np.degrees(np.arctan2(y[0] - y[3], x[0] - x[3]))
+    qx, qy = rotate_bb(x, y, width, height, theta)
+    # Crop box, as in get_ivd_vol: 50% more width per side, 2:1 aspect, patch border
+    w = max(qx) - min(qx)
+    min_x, max_x = min(qx) - w * 0.5, max(qx) + w * 0.5
+    extra_vert = ((max_x - min_x) / 2 - (max(qy) - min(qy))) * 0.5
+    min_y, max_y = min(qy) - extra_vert, max(qy) + extra_vert
+    extra_w = ((patch_size[1] - 227.0) / 2.0) * ((max_x - min_x) / 227.0)
+    extra_h = ((patch_size[0] - 113.5) / 2.0) * ((max_y - min_y) / 113.5)
+    min_x, max_x = np.round(min_x - extra_w), np.round(max_x + extra_w)
+    min_y, max_y = np.round(min_y - extra_h), np.round(max_y + extra_h)
+    # IVD voxel -> rotated (x, y, 1): central crop, then cv2.resize (pixel centres)
+    n_slices, out_height, out_width = output_shape
+    scale_x, scale_y = (max_x - min_x) / patch_size[1], (max_y - min_y) / patch_size[0]
+    x0 = min_x + ((patch_size[1] - out_width) // 2 + 0.5) * scale_x - 0.5
+    y0 = min_y + ((patch_size[0] - out_height) // 2 + 0.5) * scale_y - 0.5
+    to_rotated = [[0, 0, scale_x, x0], [0, scale_y, 0, y0], [0, 0, 0, 1]]
+    # Rotated slice -> scan (x, y): rotation by -theta, pinned on the first corner,
+    # then back to the pixels of the scan
+    rotate_back = cv2.getRotationMatrix2D((0, 0), -theta, scale=1)
+    rotate_back[:, 2] = (x[0], y[0]) - np.dot(rotate_back[:, :2], (qx[0], qy[0]))
+    col, row = np.dot(rotate_back, to_rotated) / np.reshape(pixel_scale[::-1], (2, 1))
+    return np.array([row, col, [1, 0, 0, curr_ivd_mid - n_slices // 2], [0, 0, 0, 1]])
+
+
+def get_all_ivd_vol(
+    volume,
+    all_vb_x,
+    all_vb_y,
+    all_vb_mid,
+    all_vb_label,
+    output_shape=(9, 112, 224),
+    return_affines=False,
+    pixel_spacing=None,
+):
+    # output_shape is (slices, height, width) of each IVD volume
+    # pixel_spacing is (row, col); the IVDs are cropped on square pixels of the
+    # finer of the two, so that different spacings do not distort them
+    pixel_scale = np.resize(
+        np.asarray(1 if pixel_spacing is None else pixel_spacing, dtype=float), 2
+    )
+    pixel_scale = pixel_scale / pixel_scale.min()
     # VBs intensity values
     vbs_intensity = get_vbs_intensity(
         volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label
@@ -561,8 +621,12 @@ def get_all_ivd_vol(volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label):
 
     # Get volumes
     ivds = []
+    affines = []
     norm_med = 0.5
-    patch_size = (192, 320)
+    n_slices, height, width = output_shape
+    # the IVD box is scaled to a fixed size in the patch, so a bigger patch
+    # only adds context around it
+    patch_size = (max(192, height), max(320, width))
     no_of_ivd = len(vbs_intensity) - 1
     for ivd_idx in range(no_of_ivd):
         curr_ivd_mid = np.round(
@@ -588,11 +652,12 @@ def get_all_ivd_vol(volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label):
             curr_ivd_mid,
             norm_med,
             patch_size,
+            pixel_scale,
         )
 
-        # Centered & choose 15 slices; TO-DO: resize 3D
+        # Centered native slices, zeros outside the scan
         ivd_vol_centered = []
-        for j in range(-7, 7 + 1, 1):
+        for j in range(-(n_slices // 2), n_slices - n_slices // 2):
             curr_slice = curr_ivd_mid + j
             if (curr_slice < 0) | (curr_slice >= ivd_vol.shape[2]):
                 temp_IVD = np.zeros(patch_size)
@@ -602,15 +667,27 @@ def get_all_ivd_vol(volume, all_vb_x, all_vb_y, all_vb_mid, all_vb_label):
         ivd_vol_centered = np.transpose(np.array(ivd_vol_centered), (1, 2, 0)).astype(
             float
         )
-        num_rows, num_cols, num_slices = ivd_vol_centered.shape
-        max_cols = num_cols - 48
-        min_cols = 48
-        max_rows = num_rows - 40
-        min_rows = 40
-        ivd_vol_centered = ivd_vol_centered[min_rows:max_rows, min_cols:max_cols, 3:12]
+        # Central crop; 40 rows and 48 cols per side for the default shape
+        min_rows = (patch_size[0] - height) // 2
+        min_cols = (patch_size[1] - width) // 2
+        ivd_vol_centered = ivd_vol_centered[
+            min_rows : min_rows + height, min_cols : min_cols + width
+        ]
         ivd_vol_centered = np.transpose(ivd_vol_centered, (2, 0, 1))
         ivds.append(ivd_vol_centered)
+        affine = get_ivd_affine(
+            volume.shape,
+            ivd_curr_x,
+            ivd_curr_y,
+            curr_ivd_mid,
+            patch_size,
+            output_shape,
+            pixel_scale,
+        )
+        affines.append(affine)
     ivds = np.array(ivds)
+    if return_affines:
+        return ivds, np.array(affines)
     return ivds
 
 

@@ -1,0 +1,90 @@
+name: Test and Publish PiPY Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+        # "" installs the newest versions that pyproject.toml allows
+        pins: ["", '"numpy<2" "opencv-python<4.8.0.76"']
+        include:
+          - {python-version: "3.11", pins: '"numpy<2" "opencv-python==4.8.1.78"'}
+          - {python-version: "3.11", pins: '"numpy<2" "opencv-python==4.9.0.80"'}
+          - {python-version: "3.11", pins: '"numpy<2" "opencv-python==4.11.0.86"'}
+          - {python-version: "3.11", pins: '"opencv-python==4.10.0.84"'}
+          - {python-version: "3.11", pins: '"opencv-python==4.12.0.88"'}
+          - {python-version: "3.11", pins: '"opencv-python==4.13.0.92"'}
+          - {python-version: "3.11", pins: '"opencv-python==4.14.0.94"'}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements*.txt', '**/setup.py', '**/pyproject.toml') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev] ${{ matrix.pins }} || pip install -e . ${{ matrix.pins }}
+          pip install pytest
+          python -c "import cv2, numpy; print('opencv', cv2.__version__, 'numpy', numpy.__version__)"
+
+      - name: Run tests
+        run: |
+          pytest --tb=short -v
+
+  build-and-publish:
+    needs: test  # Only run if tests pass
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # to create the GitHub release
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install build dependencies
+        run: |
+          python -m pip install --upgrade pip build twine
+
+      - name: Build distributions
+        run: |
+          python -m build
+
+      - name: Verify build
+        run: |
+          python -m twine check dist/*
+
+      - name: Publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          python -m twine upload dist/*
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/* --verify-tag --generate-notes

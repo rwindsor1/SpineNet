@@ -13,6 +13,7 @@ def extract_volumes(
     rescale_sagittal=True,
     output_shape=(224, 224, 16),
     resampling_mode="bicubic",
+    pixel_spacing=None,
 ):
     """
     Extracts volumes surrounding each vertebra detected in the scan.
@@ -29,6 +30,8 @@ def extract_volumes(
         An extent of x means extent by the square on each side by x*edge_length, where edge_length is the bigger of the width and height of the box
     resampling_mode: str
         mode to use for resampling the scan. Some options are 'nearest', 'linear', 'cubic' and 'bicubic'
+    pixel_spacing: float or (row, col) pair
+        pixel spacing of the scan. If rows and columns differ, the volumes are extracted on square pixels of the finer of the two.
 
     Outputs
     -------
@@ -37,14 +40,20 @@ def extract_volumes(
         surrounding the vertebrae as a 224x224x16 np.array
     """
 
+    # (row, col) factors that make the pixels square
+    pixel_scale = np.resize(
+        np.asarray(1 if pixel_spacing is None else pixel_spacing, dtype=float), 2
+    )
+    pixel_scale = pixel_scale / pixel_scale.min()
+
     for vert_idx, vert in enumerate(vert_dicts):
         detection_poly = vert["average_polygon"]
         detection_poly = np.array(detection_poly)
 
-        rotated_scan, new_bb = straighten_bb(scan, detection_poly)
+        rotated_scan, new_bb = straighten_bb(scan, detection_poly, pixel_scale)
 
-        new_bb_width = new_bb[:, 1].ptp()
-        new_bb_height = new_bb[:, 0].ptp()
+        new_bb_width = np.ptp(new_bb[:, 1])
+        new_bb_height = np.ptp(new_bb[:, 0])
         edge_len = np.max([new_bb_height, new_bb_width])
         y_min = int(new_bb[-1, 1] - extent * edge_len)
         x_min = int(new_bb[-1, 0] - extent * edge_len)
@@ -75,7 +84,7 @@ def extract_volumes(
     return vert_dicts
 
 
-def straighten_bb(scan, bounding_box):
+def straighten_bb(scan, bounding_box, pixel_scale=(1, 1)):
     """
     Given a 3d scan and 2d bounding boxes, rotate the boxes and the scan so that the top edge of the bounding box is horizontal and give the coordinates of the bounding box in the new scan
 
@@ -85,6 +94,8 @@ def straighten_bb(scan, bounding_box):
         a 3d numpy tensor of dimensions height, width and depth (sagittal plane)
     bounding_box: np.array
         a 4x2 tensor with with [:,0] containing the x coordinates of the box corners and [:,1] containing the y coordinates
+    pixel_scale: tuple
+        (row, col) factors that make the pixels of the scan square. The rotated scan and the new box are given in these square pixels
     Outputs
     -------
     rotated_scan: np.array
@@ -92,6 +103,7 @@ def straighten_bb(scan, bounding_box):
     new_bounding_box: np.array
         a 4x2 tensor with with [:,0] containing the x coordinates of the box corners and [:,1] containing the y coordinates. Same co-ords as bounding_box, transformed to the frame of rotated_scan
     """
+    bounding_box = bounding_box * pixel_scale[::-1]
     x_lt = bounding_box[-1, 0]
     y_lt = bounding_box[-1, 1]
     x_rt = bounding_box[0, 0]
@@ -108,13 +120,16 @@ def straighten_bb(scan, bounding_box):
         rotation_matrix @ [bounding_box[:, 0], bounding_box[:, 1], np.ones(4)]
     ).T
 
-    rotated_scan = np.zeros_like(scan).astype(np.float32)
+    # the slices are warped from their own, possibly non-square, pixels
+    rotation_matrix[:, :2] *= pixel_scale[::-1]
+    height, width = np.round(scan.shape[:2] * np.array(pixel_scale)).astype(int)
+    rotated_scan = np.zeros((height, width, scan.shape[2]), dtype=np.float32)
     for i in range(scan.shape[-1]):
         try:
             rotated_scan[:, :, i] = cv2.warpAffine(
                 scan[:, :, i],
                 rotation_matrix,
-                (scan.shape[1], scan.shape[0]),
+                (int(width), int(height)),
                 flags=cv2.INTER_CUBIC,
             )
         except Exception as e:

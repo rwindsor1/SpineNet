@@ -8,7 +8,7 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.ndimage
-from .scan_preprocessing import split_into_patches_exhaustive
+from .scan_preprocessing import split_into_patches_exhaustive, split_into_patches_exhaustive_spacing
 from .detection_post_processing import make_in_slice_detections
 
 
@@ -61,8 +61,13 @@ def detect_and_group(
             polygons detected.
     """
 
+
     # split the scan into different patches
-    patches, transform_info_dicts = split_into_patches_exhaustive(
+    # patches, transform_info_dicts = split_into_patches_exhaustive(
+    #     scan, pixel_spacing=pixel_spacing, overlap_param=0.4, using_resnet=using_resnet
+    # )
+    # split the scan into different patches
+    patches, transform_info_dicts = split_into_patches_exhaustive_spacing(
         scan, pixel_spacing=pixel_spacing, overlap_param=0.4, using_resnet=using_resnet
     )
     # group the detections made in each patch into slice level detections

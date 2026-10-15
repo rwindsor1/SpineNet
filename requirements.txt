@@ -1,4 +1,5 @@
 jupyterlab
+nibabel
 numpy
 opencv-python
 pandas
@@ -7,6 +8,7 @@ requests
 scikit-image
 scipy
 shapely
-torch
+torch>=2.0.1,<=2.5.0
 torchvision
 tqdm
+matplotlib

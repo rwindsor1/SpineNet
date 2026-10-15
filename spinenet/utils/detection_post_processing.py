@@ -6,6 +6,32 @@ import scipy.ndimage
 from shapely.geometry import Polygon, Point
 
 
+def validate_coordinates(coords, max_shape):
+    """
+    Filter out coordinates that are negative or exceed image bounds.
+
+    Parameters
+    ----------
+    coords : array-like, shape (N, 2)
+        List or array of coordinates to validate.
+    max_shape : tuple of int
+        Maximum allowed shape \(`height`, `width`\) for the coordinates.
+
+    Returns
+    -------
+    valid_coords : ndarray, shape (M, 2)
+        Array of valid coordinates within the image bounds.
+    """
+    if len(coords) == 0:
+        return np.empty((0, 2))
+
+    coords = np.array(coords)
+    valid_mask = (
+            (coords[:, 0] >= 0) & (coords[:, 0] < max_shape[0]) &
+            (coords[:, 1] >= 0) & (coords[:, 1] < max_shape[1])
+    )
+    return coords[valid_mask]
+
 def make_in_slice_detections(
     detection_net,
     patches,
@@ -64,10 +90,9 @@ def make_in_slice_detections(
 
         scan_centroid_channel = np.zeros(scan_shape[0:2]).astype(float)
         centroid_channel_contributions = np.zeros_like(scan_centroid_channel)
-        max_x = transform_info_dicts[slice_idx][0]["x2"]
-        min_x = transform_info_dicts[slice_idx][0]["x1"]
-
-        patch_edge_len = np.abs(max_x - min_x)
+        # [rows, cols] patch size; differs per axis for anisotropic spacing
+        info = transform_info_dicts[slice_idx][0]
+        patch_edge_len = np.array([info["patch_edge_h"], info["patch_edge_w"]])
 
         # resized the centroid channel to transform it into original frame
 
@@ -133,6 +158,9 @@ def make_in_slice_detections(
                         points * patch_edge_len / 224
                         + np.array([transform_info["y1"], transform_info["x1"]])
                     )
+                    transformed_patch_corners = validate_coordinates(
+                        transformed_patch_corners, scan_shape
+                    )
                     all_corners["points"][corner_type].append(transformed_patch_corners)
                     arrows = np.zeros_like(points)
                     for idx, point in enumerate(points):
@@ -171,10 +199,12 @@ def make_in_slice_detections(
         scan_centroid_channel /= centroid_channel_contributions
         # detect the centroids
         centroids = get_points(scan_centroid_channel, threshold=centroid_threshold)
+        centroids = validate_coordinates(centroids, scan_shape)
 
         detection_polys = []
         arrows = all_corners["arrows"]
         corners = all_corners["points"]
+
         # now loop through each detected centroid and find the closest displaced
         # corner of each type
         for centroid in centroids:
@@ -246,7 +276,13 @@ def make_in_slice_detections(
                 elif sum(missing_arrows) == 1:
                     for i, el in enumerate(missing_arrows):
                         if el:
-                            detection_poly[i] = centroid + indiv_arrows[(i + 2) % 4]
+                            new_corner = centroid + indiv_arrows[(i + 2) % 4]
+                            # **VALIDATE NEW CORNER COORDINATE*
+                            if not (0 <= new_corner[0] < scan_shape[0] and 0 <= new_corner[1] < scan_shape[1]):
+                                # Get closest valid coordinate within image bounds
+                                new_corner = np.clip(new_corner, [0, 0], np.array(scan_shape[:2]) - 1)
+                            detection_poly[i] = new_corner
+
                     # # flip around poly to match form needed for matplotlib plotting
                     detection_polys.append([[i[1], i[0]] for i in detection_poly])
 
@@ -373,7 +409,7 @@ def get_points(image, threshold=0.5):
     points : a Nx2 array containing the locations of each point detected
     """
 
-    image = np.array(image)
+    image = np.asarray(image)
     mask = image > threshold
     segmentation, no_labels = scipy.ndimage.label(mask)
     points = []
