@@ -1,3 +1,4 @@
+import logging
 import os
 from typing import List, Tuple, Dict, Union, Any
 import glob
@@ -74,17 +75,18 @@ def load_dicoms(
                 )
             is_sagittal = is_sagittal_dicom_slice(dicom_file)
             if not is_sagittal:
-                raise ValueError(
-                    f"File at {paths[dicom_idx]} is not a sagittal dicom slice"
-                )
+                dicom_files.pop(dicom_idx)
+                #raise ValueError(
+                logging.warning( f"File at {paths[dicom_idx]} is not a sagittal dicom slice")
         # sort slices by sagittal position
         dicom_files = sorted(
             dicom_files, key=lambda dicom_file: dicom_file.InstanceNumber
         )
 
+
         pixel_spacing = np.mean(
             [np.array(dicom_file.PixelSpacing) for dicom_file in dicom_files]
-        )
+        , axis=0)
         slice_thickness = np.mean(
             [np.array(dicom_file.SliceThickness) for dicom_file in dicom_files]
         )

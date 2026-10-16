@@ -1,8 +1,25 @@
+
+
+# SpineNet - PyPI Package
+
+[![PyPI version](https://badge.fury.io/py/spinenet.svg)](https://badge.fury.io/py/spinenet)
+[![Python](https://img.shields.io/pypi/pyversions/spinenet.svg)](https://pypi.org/project/spinenet/)
+[![Tests](https://github.com/mariamonzon/SpineNet/workflows/Test%20and%20Publish%20PiPY%20Package/badge.svg)](https://github.com/mariamonzon/SpineNet/actions)
+
+
+
+SpineNet is now available as a PyPI package for easy installation and use!
+Install SpineNet directly from PyPI using pip:
+
+```bash
+pip install spinenet
+```
+
 <p align="center">
 <img width='100%' src='spinenetlogo.png'> 
 </p>
-
 **DISCLAIMER: SpineNet is not a diagnostics tool nor a medical device. It should only be used for research.**
+
 
 ## Introduction
 
@@ -81,7 +98,7 @@ We are grateful to the providers of the example scans used in the tutorials (ori
 ## Coming Soon
 
 - [x] Documentation
-- [ ] Pip installation
+- [x] Pip installation
 - [ ] In-depth tutorials on finetuning SpineNet's grading network
 
 We are always looking to extend SpineNet to make it a more useful tool. If you have a request for features please get in touch with us.

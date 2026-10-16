@@ -3,7 +3,7 @@ spinenet-venv
 spinenet/weights/*
 tutorials/example_scans/*
 tutorials/results/*
-
+.python-version
 
 # Standard Python GitIgnore
 # Byte-compiled / optimized / DLL files
