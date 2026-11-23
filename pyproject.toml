@@ -1,3 +1,29 @@
+[project]
+name = "spinenet"
+version = "2.0.0"
+description = "Automated detection, labelling and radiological grading of spinal MRI scans."
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "jupyterlab",
+    "matplotlib",
+    "numpy",
+    "opencv-python",
+    "pandas",
+    "pydicom",
+    "requests",
+    "scikit-image",
+    "scipy",
+    "shapely",
+    "torch",
+    "torchvision",
+    "tqdm",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
 [tool.black]
 line-length = 79
 include = '\.pyi?$'
