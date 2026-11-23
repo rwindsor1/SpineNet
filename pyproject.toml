@@ -1,8 +1,10 @@
 [project]
 name = "spinenet"
-version = "2.1.4"
+version = "2.1.5"
 description = "Automated software for analysing clinical spinal MRI scans."
 readme = "README.md"
+license = "LicenseRef-SpineNet-Non-Commercial"
+license-files = ["LICENCE.md"]
 authors = [
     { name = "Maria Monzon", email = "mmonzon@ethz.ch" },
     { name = "Rhydian Windsor", email = "" }
@@ -12,7 +14,6 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
     "Topic :: Scientific/Engineering :: Medical Science Apps.",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -47,11 +48,16 @@ vis = [
     "seaborn>=0.11.0",
     "plotly>=5.0.0",
 ]
+[project.urls]
+Homepage = "https://github.com/spinetools/SpineNet"
+Documentation = "https://spinenet.readthedocs.io/en/latest"
+License = "https://github.com/spinetools/SpineNet/blob/main/LICENCE.md"
+
 [project.scripts]
 spinenet = "spinenet:main"
 
 [build-system]
-requires = ["hatchling"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 
