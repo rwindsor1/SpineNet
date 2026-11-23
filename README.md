@@ -32,20 +32,15 @@ $ uv sync
 
 This creates a `.venv` with SpineNet and its dependencies installed, so no `PYTHONPATH` changes are needed. Run scripts with `uv run python your_script.py`, or start the tutorials with `uv run jupyter lab`.
 
-Alternatively, a minimal python environment for running SpineNet can be found in `requirements.txt` and can be installed using
+Alternatively, you can install SpineNet with pip:
 
 ```
 $ python -m venv spinenet-venv
 $ source spinenet-venv/bin/activate
-$ pip install -r requirements.txt
+$ pip install -e .
 ```
 
 ### Running The Code
-
-If you installed with `pip`, add the root directory to your PYTHONPATH, e.g. via
-```
-$ export PYTHONPATH=$PYTHONPATH:/path/to/SpineNet
-```
 
 When using SpineNet for the first time, you first must download weights from the VGG public server, by calling the function
 
