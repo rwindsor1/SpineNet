@@ -4,7 +4,7 @@
 
 [![PyPI version](https://badge.fury.io/py/spinenet.svg)](https://badge.fury.io/py/spinenet)
 [![Python](https://img.shields.io/pypi/pyversions/spinenet.svg)](https://pypi.org/project/spinenet/)
-[![Tests](https://github.com/mariamonzon/SpineNet/workflows/Test%20and%20Publish%20PiPY%20Package/badge.svg)](https://github.com/mariamonzon/SpineNet/actions)
+[![Tests](https://github.com/spinetools/SpineNet/actions/workflows/publish-pkg.yml/badge.svg)](https://github.com/spinetools/SpineNet/actions/workflows/publish-pkg.yml)
 
 
 
@@ -14,6 +14,8 @@ Install SpineNet directly from PyPI using pip:
 ```bash
 pip install spinenet
 ```
+
+The latest version is [2.1.5](https://pypi.org/project/spinenet/2.1.5/) (see [Versions](#versions)). It needs Python 3.9 to 3.11 and PyTorch 2.0 to 2.5, and is tested with NumPy 1 and 2 and OpenCV 4.5 or newer (except 4.8.0.76).
 
 <p align="center">
 <img width='100%' src='spinenetlogo.png'> 
@@ -140,6 +142,23 @@ We are grateful to the providers of the example scans used in the tutorials (ori
 - 't2_lumbar_scan_1': [Case Contributed by Assoc Prof Frank Gaillard](https://radiopaedia.org/cases/normal-lumbar-spine-mri?lang=gb)
 - 't2_lumbar_scan_2': [Case Contributed by Dr Henry Knipe](https://radiopaedia.org/cases/schmorl-node-acute-10?lang=gb)
 - 'stir_whole_spine': [Case contributed by Dr Ian Bickle](https://radiopaedia.org/cases/normal-mri-whole-spine-3-t?lang=gb)
+
+## Versions
+
+All releases are on [PyPI](https://pypi.org/project/spinenet/#history) and [GitHub](https://github.com/spinetools/SpineNet/releases).
+
+| Version | Date | Changes |
+| --- | --- | --- |
+| [2.1.5](https://github.com/spinetools/SpineNet/releases/tag/v2.1.5) | 2026-11-23 | Package licence on PyPI set to the SpineNet [terms of access](https://github.com/spinetools/SpineNet/blob/main/LICENCE.md) instead of MIT; tests run on Ubuntu 24.04 to keep Python 3.9 ([#8](https://github.com/spinetools/SpineNet/issues/8)) |
+| [2.1.4](https://github.com/spinetools/SpineNet/releases/tag/v2.1.4) | 2026-10-15 | Scan affine kept consistent with the loaded DICOM slices; numpy 2 deprecation warning fixed ([#7](https://github.com/spinetools/SpineNet/issues/7)) |
+| [2.1.3](https://github.com/spinetools/SpineNet/releases/tag/v2.1.3) | 2026-10-11 | `SpacingBetweenSlices` used if `SliceThickness` is missing; GitHub releases created on publish ([#7](https://github.com/spinetools/SpineNet/issues/7)) |
+| 2.1.2 | 2026-10-11 | Scan affine from the DICOM slice positions; numpy 2 and newer OpenCV supported; non-square pixel spacing in IVD and vertebra crops |
+| 2.1.1 | 2026-10-05 | `voxel_to_scan` in the IVD dicts and `scan_affine` in `save_ivd_volumes` |
+| 2.1.0 | 2026-10-01 | Configurable IVD volume shape and `save_ivd_volumes` |
+| 2.0.5 | 2026-09-30 | Anisotropic pixel spacing fixed in detection and labelling |
+| [2.0.4](https://github.com/spinetools/SpineNet/releases/tag/v2.0.4) | 2025-09-26 | Different x and y pixel spacing supported |
+| [2.0.3](https://github.com/spinetools/SpineNet/releases/tag/v.2.0.3) | 2025-09-17 | Pixel spacing stored as an array; tests and automatic publishing to PyPI |
+| 2.0.2 | 2025-09-09 | First release on PyPI |
 
 ## Coming Soon
 
