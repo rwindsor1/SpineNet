@@ -24,20 +24,23 @@ Please note that by using SpineNet you agree to our [terms of access](LICENCE.md
 
 SpineNet's documentation is available [here](https://spinenet.readthedocs.io/en/latest)
 ### Install enviroments
-A minimal python environment for running SpineNet can be found in `requirements.txt` and can be installed used
+The easiest way to set up SpineNet is with [uv](https://docs.astral.sh/uv/). From the root of the repository, run
+
+```
+$ uv sync
+```
+
+This creates a `.venv` with SpineNet and its dependencies installed, so no `PYTHONPATH` changes are needed. Run scripts with `uv run python your_script.py`, or start the tutorials with `uv run jupyter lab`.
+
+Alternatively, you can install SpineNet with pip:
 
 ```
 $ python -m venv spinenet-venv
 $ source spinenet-venv/bin/activate
-$ pip install -r requirements.txt
+$ pip install -e .
 ```
 
 ### Running The Code
-
-Clone the repository and add the root directory to your PYTHONPATH, e.g. via
-```
-$ export PYTHONPATH=$PYTHONPATH:/path/to/SpineNet
-```
 
 When using SpineNet for the first time, you first must download weights from the VGG public server, by calling the function
 

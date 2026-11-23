@@ -10,21 +10,21 @@ Currently, SpineNet can only be installed by cloning the git repository:
 
    git clone git@github.com:rwindsor1/SpineNet.git
 
-Once this is done, you can then install a minimal python virtual enviroment to run the project.
+The easiest way to set up the environment is with `uv <https://docs.astral.sh/uv/>`_. From the root of the repository, run:
+
+.. code-block:: console
+
+   uv sync
+
+This installs SpineNet and its dependencies into a ``.venv``, so no ``PYTHONPATH`` changes are needed. Use ``uv run`` to run scripts, e.g. ``uv run jupyter lab``.
+
+Alternatively, you can install SpineNet with pip.
 
 .. code-block:: console
 
    python -m venv spinenet-venv
    source spinenet-venv/bin/activate
-   pip install -r requirements.txt
-
-
-
-Finally, add spinenet to your python path so it can be imported into scripts:
-
-.. code-block:: console
-
-        export PYTHONPATH=$PYTHONPATH:/path/to/SpineNet
+   pip install -e .
 
 Download Weights
 ----------------
