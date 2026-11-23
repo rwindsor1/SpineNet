@@ -110,18 +110,12 @@ def straighten_bb(scan, bounding_box):
 
     rotated_scan = np.zeros_like(scan).astype(np.float32)
     for i in range(scan.shape[-1]):
-        try:
-            rotated_scan[:, :, i] = cv2.warpAffine(
-                scan[:, :, i],
-                rotation_matrix,
-                (scan.shape[1], scan.shape[0]),
-                flags=cv2.INTER_CUBIC,
-            )
-        except Exception as e:
-            print(e)
-            import pdb
-
-            pdb.set_trace()
+        rotated_scan[:, :, i] = cv2.warpAffine(
+            scan[:, :, i],
+            rotation_matrix,
+            (scan.shape[1], scan.shape[0]),
+            flags=cv2.INTER_CUBIC,
+        )
 
     return rotated_scan, new_bounding_box
 

@@ -19,11 +19,13 @@ def download(url: str, fname: str, verbose: bool = True) -> None:
         Whether to print progress information. The default is True.
     '''
     resp = requests.get(url, stream=True)
+    resp.raise_for_status()
+    part_fname = fname + '.part'
     total = int(resp.headers.get('content-length', 0))
     # Can also replace 'file' with a io.BytesIO object
     if verbose:
         print(f"Downloading {fname} from {url}...")
-        with open(fname, 'wb') as file, tqdm(
+        with open(part_fname, 'wb') as file, tqdm(
             desc=fname,
             total=total,
             unit='iB',
@@ -34,9 +36,10 @@ def download(url: str, fname: str, verbose: bool = True) -> None:
                 size = file.write(data)
                 bar.update(size)
     else:
-        with open(fname, 'wb') as file:
+        with open(part_fname, 'wb') as file:
             for data in resp.iter_content(chunk_size=1024):
                 file.write(data)
+    os.replace(part_fname, fname)
     return
 
 
@@ -67,4 +70,3 @@ def download_weights(weights_path: str, weight_urls_dict: dict, force: bool = Fa
             download(url, fname, verbose=verbose)
         else:
             warnings.warn('{} already exists. Skipping download.'.format(fname))
-            return
