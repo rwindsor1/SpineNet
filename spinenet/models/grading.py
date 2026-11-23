@@ -330,7 +330,7 @@ class GradingModel(nn.Module):
         if os.path.isdir(save_path):
             list_of_pt = glob.glob(save_path + "/*.pt")
             latest_pt = max(list_of_pt, key=os.path.getctime)
-            checkpoint = torch.load(latest_pt, map_location="cpu")
+            checkpoint = torch.load(latest_pt, map_location="cpu", weights_only=False)
             self.load_state_dict(checkpoint["model_weights"])
             start_epoch = checkpoint["epoch_no"] + 1
             if verbose:
