@@ -15,7 +15,7 @@ sys.path.insert(0, pathlib.Path(__file__).absolute().parents[1].resolve().as_pos
 project = 'SpineNet'
 copyright = '2022, Rhydian Windsor'
 author = 'Rhydian Windsor'
-release = 'v2.1.0'
+release = 'v2.1.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration

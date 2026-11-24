@@ -7126,7 +7126,7 @@ wheels = [
 
 [[package]]
 name = "spinenet"
-version = "2.1.0"
+version = "2.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "jupyterlab", version = "4.5.11", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.10'" },
