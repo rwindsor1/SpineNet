@@ -31,7 +31,7 @@ def normalize_patch(patch : np.ndarray,
     lower_percentile_val = np.percentile(patch, lower_percentile)
     robust_range = np.abs(upper_percentile_val - lower_percentile_val)
     if upper_percentile_val == lower_percentile_val:
-        patch = (patch - patch.min()) / (patch.ptp() + 1e-9)
+        patch = (patch - patch.min()) / (np.ptp(patch) + 1e-9)
     else:
         patch = (patch - patch.min()) / (robust_range + 1e-9)
 

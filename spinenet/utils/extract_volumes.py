@@ -43,8 +43,8 @@ def extract_volumes(
 
         rotated_scan, new_bb = straighten_bb(scan, detection_poly)
 
-        new_bb_width = new_bb[:, 1].ptp()
-        new_bb_height = new_bb[:, 0].ptp()
+        new_bb_width = np.ptp(new_bb[:, 1])
+        new_bb_height = np.ptp(new_bb[:, 0])
         edge_len = np.max([new_bb_height, new_bb_width])
         y_min = int(new_bb[-1, 1] - extent * edge_len)
         x_min = int(new_bb[-1, 0] - extent * edge_len)
@@ -110,18 +110,12 @@ def straighten_bb(scan, bounding_box):
 
     rotated_scan = np.zeros_like(scan).astype(np.float32)
     for i in range(scan.shape[-1]):
-        try:
-            rotated_scan[:, :, i] = cv2.warpAffine(
-                scan[:, :, i],
-                rotation_matrix,
-                (scan.shape[1], scan.shape[0]),
-                flags=cv2.INTER_CUBIC,
-            )
-        except Exception as e:
-            print(e)
-            import pdb
-
-            pdb.set_trace()
+        rotated_scan[:, :, i] = cv2.warpAffine(
+            scan[:, :, i],
+            rotation_matrix,
+            (scan.shape[1], scan.shape[0]),
+            flags=cv2.INTER_CUBIC,
+        )
 
     return rotated_scan, new_bounding_box
 
